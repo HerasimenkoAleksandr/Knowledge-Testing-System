@@ -6,6 +6,13 @@
 #include <vector>
 using namespace std;
 
+void Logo()
+{
+	system("cls");
+	cout << "                  ___________________________" << endl;
+	cout << "                 ^ Knolwlege Testing Systeam ^                      " << endl;
+	cout << "                 ^___________________________^" << endl << endl;
+}
 class ListOFPeople : public IRegistration
 {
 	vector <student> Init;
@@ -49,13 +56,7 @@ public:
 		}
 		return false;
 	}
-	void Logo()
-	{
-		system("cls");
-		cout << "                  ___________________________" << endl;
-		cout << "                 ^ Knolwlege Testing Systeam ^                      " << endl;
-		cout << "                 ^___________________________^" << endl << endl;
-	}
+	
 	void Enter()
 	{
 		Logo();
@@ -72,8 +73,9 @@ public:
 		{
 			int a=IEnterToApp();
 			if (a > 3)
-				system("cls");
 			{
+				system("cls");
+			
 				Enter();
 			}
 			break;
@@ -152,7 +154,6 @@ public:
 			ICreatAcount();
 		}
 	}
-	
 	void WriteFile()
 	{
 		string a("DataPeople.txt");
@@ -219,19 +220,217 @@ public:
 	}
 
 };
+class Admin : public human, public IRegistration
+{
+
+public:
+	Admin(): human(){}
+	Admin(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP) : human(nameP, surnameP, loginP, passwordP, IDP) {}
+
+	void Enter()
+	{
+		Logo();
+		ReadFile();
+		cout << "Enter -1- if you have an acount" << endl;
+		cout << "Enter -2- if you want to create an acount" << endl;
+		//system("cls");
+		int b;
+		cin >> b;
+		system("cls");
+		switch (b)
+		{
+		case(1):
+		{
+			int a = IEnterToApp();
+			if (a > 3)
+			{
+				system("cls");
+
+				Enter();
+			}
+			break;
+		}
+		case(2):
+		{
+			if (GetID() == 1796)
+			{
+				cout << "Already have an administrator" << endl;
+				cout << "In this application, there is only one administrator!" << endl;
+				system("pause");
+				Enter();
+			}
+			else
+			ICreatAcount();
+			break;
+		}
+		default:
+		{
+			Enter();
+		}
+		}
+	}
+	void Show()
+	{
+		cout << "Student's name: " << GetName()<< endl;
+		cout << "surname:        " << GetSurname() << endl;
+		cout << "Login:           " << GetLgin() << endl;
+		cout << "Passwor:        " << GetPassword() << endl;
+		cout << "ID:             " << GetID() << endl;
+		cout << " ================================================== " << endl;
+
+
+	}
+	void edit()
+	{
+		cout << "good";
+	}
+
+	void SetAdmin()
+	{
+		cout << "Hello Admin! " << endl;
+		SetName();
+		SetSurname();
+		SetLgin();
+		SetPassword();
+		ID = 1000;
+
+	}
+	void ICreatAcount()
+	{
+
+		SetAdmin();
+		cout << endl << endl;
+		Show();
+		int b;
+		cout << endl;
+		cout << "If everything is correct, press 5 to create an account!!!" << endl;
+		cin >> b;
+		if (b == 5)
+		{
+
+			WriteFile();
+			system("cls");
+			cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
+		}
+		else
+		{
+			ICreatAcount();
+		}
+	}
+	bool HaveLogin(const string& login)
+	{
+		
+		if (login == GetLgin())
+			{
+				return true;
+			}
+
+		
+		return false;
+	}
+	bool HavePassword(const string& password)
+	{
+		if (password == GetPassword())
+			{
+				return true;
+			}
+
+			return false;
+	}
+	int IEnterToApp()
+	{
+		Logo();
+		string a;
+		string b;
+		cout << "<<<<<<<<<<<<<<<<<<<<<<  HELLO ADMIN  >>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+		cout << "                 Enter your username to login" << endl;
+		cout << "_______: ";
+		cin >> a;
+		cout << "                Enter your username to Password" << endl;
+		cout << "_______: ";
+		cin >> b;
+		int t = 0;
+		while (!HaveLogin(a) || !HavePassword(b))
+		{
+			if (t > 3)
+				break;
+			system("cls");
+			//cout << "LOGIN --> " << a << endl;
+			cout << "Login or password entered incorrectly. REPEAT!!! " << endl;
+			cout << "   Enter your username to login" << endl;
+			cin >> a;
+			cout << "   Enter your username to Password" << endl;
+			cin >> b;
+			t++;
+		}
+		return t;
+
+	}
+	void WriteFile()
+	{
+		string a("DataAdmin.txt");
+		fstream fs;
+		fs.open(a, fstream::out);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+
+		fs << GetName() << "\n";
+		fs << GetSurname() << "\n";
+		fs << GetLgin() << "\n";
+		fs << GetPassword() << "\n";
+		fs << GetID() << "\n";
+		fs.close();
+	}
+	void ReadFile()
+	{
+		string a("DataAdmin.txt");
+		fstream fs;
+		fs.open(a, fstream::in);
+		if (!fs.is_open())
+		{
+			cout << "Your account will be the first" << endl; //Error open file
+		}
+		else
+		{
+			
+			string name;
+			string surname;
+			string Password;
+			string login;
+			int ID;
+			int b = 0;
+				fs >> name;
+				fs >> surname;
+				fs >> login;
+				fs >> Password;
+				fs >> ID;
+				
+				Admin B(name, surname, login, Password, ID);
+				*this = B;
+			
+
+			fs.close();
+		}
+	}
+};
  
 
 
 int main()
 {
-	//student temp(name, surname, Password, login, ID, address, phone_nomber);
-	//Init.push_back( student r("Ivan", "Bobrov", "email", "33333", 1111, "0937018395", "Stroiteley"));
+	Admin W;
+	//W.ICreatAcount();
+	W.ReadFile();
+	W.Enter();
+	W.Show();
 	
-	ListOFPeople T;
+	//ListOFPeople T;
 
-	T.Enter();
-	system("cls");
-	cout << "CONGTETULATE!CONGTETULATECONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!ATE!CONGTETULATE!"<<endl;
+	//T.Enter();
+	//system("cls");
+	//cout << "CONGTETULATE!CONGTETULATECONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!ATE!CONGTETULATE!"<<endl;
 
 	
 

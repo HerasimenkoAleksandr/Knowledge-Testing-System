@@ -145,39 +145,50 @@ public:
 		return 1;
 	}
 };
-class Admin : public human, public IRegistration
-{
-
-public:
-	Admin(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP) : human(nameP, surnameP, loginP, passwordP, IDP) {}
-
-
-	void Show()
-	{
-		cout << "Admin ==============!" << endl;
-		cout << name << endl;
-		cout << surname << endl;
-		cout << login << endl;
-		cout << password << endl;
-
-
-	}
-	void edit()
-	{
-		cout << "good";
-	}
-	void edit1()
-	{
-		cout << "55555555555555555555555555555555555555555555555555";
-	}
-	void ICreatAcount()
-	{
-		cout << "aD IReg()" << endl;
-	}
-	int IEnterToApp()
-	{
-		cout << "ad Identification()" << endl;
-		return 1;
-	}
-	
-};
+//class Admin : public human, public IRegistration
+//{
+//
+//public:
+//	Admin(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP) : human(nameP, surnameP, loginP, passwordP, IDP) {}
+//
+//	void SetAdmin()
+//	{
+//
+//		cout << "Hello Admin! " << endl;
+//
+//		SetName();
+//		SetSurname();
+//		SetLgin();
+//		SetPassword();
+//		SetID();
+//		
+//	}
+//	void Show()
+//	{
+//		cout << "Admin ==============!" << endl;
+//		cout << name << endl;
+//		cout << surname << endl;
+//		cout << login << endl;
+//		cout << password << endl;
+//
+//
+//	}
+//	void edit()
+//	{
+//		cout << "good";
+//	}
+//	void edit1()
+//	{
+//		cout << "55555555555555555555555555555555555555555555555555";
+//	}
+//	void ICreatAcount()
+//	{
+//		cout << "aD IReg()" << endl;
+//	}
+//	int IEnterToApp()
+//	{
+//		cout << "ad Identification()" << endl;
+//		return 1;
+//	}
+//	
+//};
