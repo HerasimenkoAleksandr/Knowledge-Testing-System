@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "Header.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 void Logo()
@@ -271,8 +272,8 @@ public:
 	}
 	void Show()
 	{
-		cout << "Student's name: " << GetName()<< endl;
-		cout << "surname:        " << GetSurname() << endl;
+		cout << "Admin's name: " << GetName()<< endl;
+		cout << "Surname:        " << GetSurname() << endl;
 		cout << "Login:           " << GetLgin() << endl;
 		cout << "Passwor:        " << GetPassword() << endl;
 		cout << "ID:             " << GetID() << endl;
@@ -415,16 +416,276 @@ public:
 		}
 	}
 };
- 
+class Question
+{
+	string qustion;
+	string answer1;
+	string answer2;
+	string answer3;
+	string answer4;
+	int correct_answer;
 
+public:
+
+	Question(const string& qustionP, const string& answer1P, const string& answer2P, const string& answer3P, const string& answer4P, int correct_answerP):qustion{ qustionP},
+		answer1{ answer1P }, answer2{ answer2P }, answer3{ answer3P }, answer4{ answer4P }, correct_answer{ correct_answerP }{}
+	Question() :Question( "", "","", "", "", 0) {}
+
+	string GetQustion()
+	{
+		return qustion;
+	}
+	string GetAnswer1()
+	{
+		return answer1;
+	}
+	string GetAnswer2()
+	{
+		return answer2;
+	}
+	string GetAnswer3()
+	{
+		return answer3;
+	}
+	string GetAnswer4()
+	{
+		return answer4;
+	}
+	int GetCorrect_answer()
+	{
+		return correct_answer;
+	}
+	void ShowQustion()
+	{
+		cout << qustion << endl;
+		cout << "1. - " << answer1 << endl;
+		cout << "2. - " << answer2 << endl;
+		cout << "3. - " << answer3 << endl;
+		cout << "4. - " << answer4 << endl;
+	}
+	void AddQustion()
+	{
+
+		//cin.ignore(1, -1);
+		cout << "Write down the question: " << endl;
+		cout << "--->:";
+		cin.ignore(1, -1);
+		getline(cin, qustion);
+		cout << "- write down the first answer: " << endl;
+		cout << "--->:";
+		getline(cin, answer1);
+		cout << "- write down the second answer: " << endl;
+		cout << "--->:";
+		getline(cin, answer2);
+		cout << "- write down the third answer: " << endl;
+		cout << "--->:";
+		getline(cin, answer3);
+		cout << "- write down the fourth answer: " << endl;
+		cout << "--->:";
+		getline(cin, answer4);
+		cout << "Indicate the number where the correct answer is located:" << endl;
+		cout << "--->:";
+		cin >> correct_answer;
+
+	}
+	bool AnswerFromStudent()
+	{
+		ShowQustion();
+		cout << endl;
+		cout << "Write down the number of the correct answer" << endl;
+		cout << "--->: ";
+		int a;
+		cin >> a;
+		if (a == correct_answer)
+			return 1;
+		else
+			return 0;
+	}
+};
+
+
+class Test
+{
+	int IDStudent;
+	string subject;
+	string TestName;
+	vector <Question> test;
+	int result;
+	int percent;
+public:
+	Test() : IDStudent{ 0 }, subject{}, TestName{}, test{}, result{ 0 }, percent{}{}
+	Test(int IDStudentP) : IDStudent{ IDStudentP }, subject{}, TestName{}, test{}, result{ 0 }, percent{}{}
+	string GetSubject()
+	{
+		return subject;
+	}
+	string GetTestName()
+	{
+		return  TestName;
+	}
+	void AddNewTest()
+	{
+		cout << "Enter the name of the subject:" << endl;
+		cout << "--->: ";
+		getline(cin, subject);
+		cout << "Enter the name of the knowledge category:" << endl;
+		cout << "--->: ";
+		getline(cin, TestName);
+
+		for (int i = 0; i < 12; i++)
+		{
+			system("cls");
+			cout << ">->-> "<< subject << ">->-> " <<TestName << endl<<endl;
+			cout << "_____________QUSTION " << i + 1 << "_____________" << endl << endl;
+			Question temp;
+			temp.AddQustion();
+			test.push_back(temp);
+			cout << endl;
+		}
+	}
+	void WriteFile()
+	{
+		//string a(TestName);
+		fstream fs;
+		fs.open(TestName, fstream::out);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+
+		fs << subject << "\n";
+		fs << TestName << "\n";
+		for (int i = 0; i < 12; i++)
+		{
+			fs << test[i].GetQustion() <<"\n";
+			fs << test[i].GetAnswer1() << "\n";
+			fs << test[i].GetAnswer2() << "\n";
+			fs << test[i].GetAnswer3() << "\n";
+			fs << test[i].GetAnswer4() << "\n";
+			fs << test[i].GetCorrect_answer() << "\n";
+		}
+		
+	fs.close();
+	}
+	//void ReadFile()
+	//{
+	//	string a("DataAdmin.txt");
+	//	fstream fs;
+	//	fs.open(a, fstream::in);
+	//	if (!fs.is_open())
+	//	{
+	//		cout << "Your account will be the first" << endl; //Error open file
+	//	}
+	//	else
+	//	{
+
+	//		string name;
+	//		string surname;
+	//		string Password;
+	//		string login;
+	//		int ID;
+	//		int b = 0;
+	//		fs >> name;
+	//		fs >> surname;
+	//		fs >> login;
+	//		fs >> Password;
+	//		fs >> ID;
+
+	//		Admin B(name, surname, login, Password, ID);
+	//		*this = B;
+
+
+	//		fs.close();
+	//	}
+	//}
+
+	int PassTest()
+	{
+		
+		for (int i = 0; i < 12; i++)
+		{
+			system("cls");
+			cout << "_____________QUSTION " << i + 1 << "_____________" << endl << endl;
+			if(test[i].AnswerFromStudent())
+				result++;
+		}
+		percent = result / 0.12;
+		cout << "You answered " << result << " questions correctly!" << endl;
+		cout << "Scored " << percent << "%" << endl;
+		return result;
+	}
+
+
+
+};
+
+
+class KnowledgeTesting
+{
+	
+	vector <Test> tests;
+public:
+	KnowledgeTesting(): tests{}{}
+	void NewTest()
+	{
+
+		//tests[0].GetTestName();
+		Test temp;
+		temp.AddNewTest();
+		temp.WriteFile();
+		tests.push_back(temp);
+		string a("ListTest");
+		fstream fs;
+		fs.open(a, fstream::out);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		vector <Test>  ::iterator iter = tests.begin();
+		for (; iter != tests.end(); iter++)
+		{
+			fs << iter->GetSubject() << "\n";
+			fs << iter->GetTestName() << "\n";
+		}
+	
+		
+		fs.close();
+	}
+
+
+
+
+};
 
 int main()
 {
+	KnowledgeTesting A;
+	A.NewTest();
+	Test N;
+	N.AddNewTest();
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+
+	N.PassTest();
+	Question T;
+	//T.AddQustion();
+	cout << endl;
+	cout << T.GetQustion();
+	T.ShowQustion();
+	if (T.AnswerFromStudent())
+		cout << "Good";
+	else
+		cout << "not god";
+
+
 	Admin W;
 	//W.ICreatAcount();
-	W.ReadFile();
-	W.Enter();
-	W.Show();
+	//W.ReadFile();
+//	W.Enter();
+	//W.Show();
 	
 	//ListOFPeople T;
 
