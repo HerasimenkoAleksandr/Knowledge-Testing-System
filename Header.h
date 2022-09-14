@@ -1,4 +1,7 @@
 #pragma once
+#include <fstream>
+#include <string>
+#include<vector>
 using namespace std;
 
 struct IRegistration
@@ -20,6 +23,8 @@ public:
 	human() :name{}, surname{}, login{}, password{}, ID{ 0 }{}
 	human(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP ) : name{ nameP }, surname{ surnameP }, login{ loginP },
 		password{ passwordP },  ID{IDP}{}
+	human(const string& nameP, const string& surnameP, int IDP) : name{ nameP }, surname{ surnameP }, login{ },
+		password{  }, ID{ IDP }{}
 	virtual void Show() = 0;
 	virtual void edit() = 0;
 	string GetName()
@@ -82,12 +87,12 @@ public:
 	student() :human(), address{}, phone_number{}{}
 	student(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP , const string& addressP, const string& phone_numberP) :
 		human(nameP, surnameP, loginP, passwordP, IDP), address{ addressP }, phone_number{ phone_numberP }{}
-
+	student(const string& nameP, const string& surnameP,  int IDP)  :human(nameP, surnameP,  IDP),  address{  }, phone_number{  }{}
 	void Show()
 	{
 		cout << "Student's name: " << name << endl;
 		cout << "surname:        " << surname << endl;
-		cout << "Login:           " << login << endl;
+		cout << "Login:          " << login << endl;
 		cout << "Passwor:        " << password << endl;
 		cout << "Address:        " << address << endl;
 		cout << "Phone number:   " << phone_number << endl;
@@ -98,7 +103,7 @@ public:
 	void SetStudent()
 	{
 		
-		cout << "Dear student! We are glad to see you here!!!" << endl;
+		
 		
 		SetName();
 		SetSurname();
@@ -110,12 +115,25 @@ public:
 	}
 	void SetAddress()
 	{
-		cout << "Enter address ";
-		cin >> address;
+		cout << "Enter address: ";
+		cin.ignore(256, '\n');
+		getline(cin, address);
+	}
+	student& operator=(student& obj)
+	{
+		name= obj.GetName();
+		surname = obj.GetSurname();
+		login = obj.GetLgin();
+		password = obj.GetPassword();
+		ID = obj.GetID();
+		address = obj.GetAddress();
+		phone_number = obj.GetPhone_number();
+		return *this;
+
 	}
 	void SetPhone()
 	{
-		cout << "Enter phone number ";
+		cout << "Enter phone number: ";
 		cin >> phone_number;
 	}
 	string GetAddress()
@@ -144,6 +162,12 @@ public:
 		cout << "student Identification()" << endl;
 		return 1;
 	}
+
+	/*void GoTest(KnowledgeTesting& obj)
+	{
+		obj.
+
+	}*/
 };
 //class Admin : public human, public IRegistration
 //{
@@ -192,3 +216,27 @@ public:
 //	}
 //	
 //};
+
+
+
+class ListOFPeople : public IRegistration
+{
+	vector <student> Init;
+public:
+	ListOFPeople():Init {}{}
+	void Add(const student& obj);
+	void ShowStudent();
+	bool HaveLogin(const string& login);
+	bool HaveID(int IDp);
+	bool HavePassword(const string& login, const string& password);
+
+	student Enter();
+	void DeleteStudent();
+	int IEnterToApp();
+	void ICreatAcount();
+
+	void Edit();
+	void WriteFile();
+	void ReadFile();
+
+};

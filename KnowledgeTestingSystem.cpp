@@ -10,217 +10,368 @@ using namespace std;
 void Logo()
 {
 	system("cls");
-	cout << "                  ___________________________" << endl;
-	cout << "                 ^ Knolwlege Testing Systeam ^                      " << endl;
-	cout << "                 ^___________________________^" << endl << endl;
+	cout << "               __________________________________" << endl;
+	cout << "              ^     Knolwlege Testing Systeam    ^                      " << endl;
+	cout << "              ^__________________________________^" << endl << endl;
 }
-class ListOFPeople : public IRegistration
-{
-	vector <student> Init;
-public:
-	void Add(student& obj)
-	{
-		Init.push_back(obj);
-	
-	}
-	void ShowStudent()
-	{
-		vector <student>  ::iterator iter = Init.begin();
-		for (; iter != Init.end(); iter++)
-		{
-			iter->Show();
-			}
-	}
-	bool HaveLogin(const string& login)
-	{
-		vector <student>  ::iterator iter = Init.begin();
-		for (; iter != Init.end(); iter++)
-		{
-			if (login == iter->GetLgin())
-			{
-				return true;
-			}
-
-		}
-		return false;
-	}
-	bool HavePassword(const string& password)
-	{
-		vector <student>  ::iterator iter = Init.begin();
-		for (; iter != Init.end(); iter++)
-		{
-			if (password == iter->GetPassword())
-			{
-				return true;
-			}
-
-		}
-		return false;
-	}
-	
-	void Enter()
-	{
-		Logo();
-		ReadFile();
-		cout << "Enter -1- if you have an acount" << endl;
-		cout <<"Enter -2- if you want to create an acount" << endl;
-		//system("cls");
-		int b;
-		cin >> b;
-		system("cls");
-		switch (b)
-		{
-		case(1):
-		{
-			int a=IEnterToApp();
-			if (a > 3)
-			{
-				system("cls");
-			
-				Enter();
-			}
-			break;
-		}
-		case(2):
-		{
-			ICreatAcount();
-			break;
-		}
-		default:
-		{
-			Enter();
-		}
-		}
-
-			
-
-	}
-	int IEnterToApp()
-	{
-		Logo();
-		string a;
-		string b;
-		cout << "<<<<<<<<<<<<<<<<<<<<<<  HELLO STUDENT  >>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl; 
-		cout << "                 Enter your username to login" << endl;
-		cout << "_______: " ;
-		cin >>a;
-		cout << "                Enter your username to Password" << endl;
-		cout << "_______: " ;
-		cin >> b;
-		int t = 0;
-		while (!HaveLogin(a)||!HavePassword(b))
-		{
-			if (t > 3)
-				break;
-			system("cls");
-			//cout << "LOGIN --> " << a << endl;
-			cout << "Login or password entered incorrectly. REPEAT!!! " << endl;
-			cout << "   Enter your username to login" << endl;
-			cin >> a;
-			cout << "   Enter your username to Password" << endl;
-			cin >> b;
-			t++;
-		}
-		return t;
-
-	}
-	void ICreatAcount()
-	{
-				student temp;
-			temp.SetStudent();
-			cout << endl << endl;
-		 while (HaveLogin(temp.GetLgin()))
-		 {
-			 system("cls");
-		     cout << "LOGIN --> " << temp.GetLgin() << endl;
-			 cout << "THIS LOGIN IS BEING USED. You need to enter another login! " << endl;
-			 temp.SetLgin();
-			
-		 }
-		 cout << endl;
-		temp.Show();
-		int b;
-		cout << endl;
-		cout << "If everything is correct, press 5 to create an account!!!" << endl;
-		cin >> b;
-		if (b == 5)
-		{
-			Init.push_back(temp);
-			WriteFile();
-			system("cls");
-			cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
-		}
-		else
-		{
-			ICreatAcount();
-		}
-	}
-	void WriteFile()
-	{
-		string a("DataPeople.txt");
-		fstream fs;
-		fs.open(a,  fstream::out);
-		if (!fs.is_open())
-		{
-			cout << "Error open file" << endl; //Error open file
-		}
-		vector <student>  ::iterator iter = Init.begin();
-		for (; iter != Init.end(); iter++)
-		{
-			//fstream fs;
-			fs << iter->GetName() << "\n";
-			fs << iter->GetSurname() << "\n";
-			fs << iter->GetLgin() << "\n";
-			fs << iter->GetPassword() << "\n";
-			fs << iter->GetAddress() << "\n";
-			fs << iter->GetPhone_number() << "\n";
-			fs << iter->GetID() << "\n";
-
-		}
-		fs.close();
-	}
-	void ReadFile()
-	{
-		string a("DataPeople.txt");
-		fstream fs;
-		fs.open(a, fstream::in );
-		if (!fs.is_open())
-		{
-			cout << "Your account will be the first" << endl; //Error open file
-		}
-		else
-		{
-			//student temp;
-			string name;
-			string surname;
-			string Password;
-			string login;
-			string address;
-			string phone_nomber;
-			int ID;
-			int b = 0;
-			while (!fs.eof())
-			{
-			
-				fs >> name;
-				fs >> surname;
-				fs >> login;
-				fs >> Password;
-				fs >> address;
-				fs >> phone_nomber;
-				fs >> ID;
-				ID = 100;
-				student temp(name, surname, login, Password, ID, address, phone_nomber);
-				Init.push_back(temp);
-				//b++;
-			}
-
-			Init.pop_back();
-			fs.close();
-		}
-	}
-
-};
+//class ListOFPeople : public IRegistration
+//{
+//	vector <student> Init;
+//public:
+//	void Add(const student& obj)
+//	{
+//		Init.push_back(obj);
+//	
+//	}
+//	void ShowStudent()
+//	{
+//		//ReadFile();
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			iter->Show();
+//		}
+//		system("pause");
+//	}
+//	bool HaveLogin(const string& login)
+//	{
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if (login == iter->GetLgin())
+//			{
+//				return true;
+//			}
+//
+//		}
+//		return false;
+//	}
+//	bool HaveID(int IDp)
+//	{
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if (IDp == iter->GetID())
+//			{
+//				return true;
+//			}
+//
+//		}
+//		return false;
+//	}
+//	bool HavePassword(const string& login, const string& password)
+//	{
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if (login == iter->GetLgin() && password == iter->GetPassword())
+//			{
+//				return true;
+//			}
+//
+//		}
+//		return false;
+//	}
+//	
+//	student Enter()
+//	{
+//		Logo();
+//		Init.clear();
+//	    ReadFile();
+//		cout << "Enter -1- if you have an acount" << endl << endl;
+//		cout <<"                  Enter -2- if you want to create an acount" << endl << endl;
+//		cout << "                                               press -3- to exit" << endl << endl;
+//		//system("cls");
+//		int b;
+//		cin >> b;
+//		system("cls");
+//		switch (b)
+//		{
+//		case(1):
+//		{
+//			int a=IEnterToApp();
+//			vector <student>  ::iterator iter = Init.begin();
+//			for (; iter != Init.end(); iter++)
+//			{
+//				if (a == iter->GetID())
+//				{
+//					return *iter;
+//				}
+//
+//			}
+//			if (a <1000)
+//			{
+//				system("cls");
+//			
+//				Enter();
+//			}
+//			break;
+//		}
+//		case(2):
+//		{
+//			ICreatAcount();
+//			return Init.back();
+//			
+//		}
+//		case(3):
+//		{
+//			student s;
+//			return s;
+//			
+//
+//		}
+//		default:
+//		{
+//			Enter();
+//		}
+//		}	
+//		
+//	}
+//
+//
+//	void DeleteStudent()
+//	{
+//		string a("DataPeople.txt");
+//		fstream fs;
+//		fs.open(a, fstream::out);
+//		if (!fs.is_open())
+//		{
+//			cout << "Error open file" << endl; //Error open file
+//		}
+//		Logo();
+//		//ReadFile();
+//		cout << "Enter the ID of the student whose information you want to delete " << endl;
+//		int id;
+//		//tem.SetStudent();
+//
+//		cin >> id;
+//		system("cls");
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if (id == iter->GetID())
+//			{
+//				continue;
+//				
+//			}
+//			else
+//			{
+//				fs << iter->GetName() << "\n";
+//				fs << iter->GetSurname() << "\n";
+//				fs << iter->GetLgin() << "\n";
+//				fs << iter->GetPassword() << "\n";
+//				fs << iter->GetAddress() << "\n";
+//				fs << iter->GetPhone_number() << "\n";
+//				fs << iter->GetID() << "\n";
+//			}
+//		}
+//		Init.pop_back();
+//		
+//		
+//					system("cls");
+//			cout << " --------- >>> deletion completed <<<-----------" << endl;
+//			system("pause");
+//		
+//
+//	}
+//	int IEnterToApp()
+//	{
+//		Logo();
+//		string a;
+//		string b;
+//		cout << "<<<<<<<<<<<<<<<<<<<<<<  HELLO STUDENT  >>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl; 
+//		cout << "                 Enter your username to login" << endl;
+//		cout << "_______: " ;
+//		cin >>a;
+//		cout << "                Enter your username to Password" << endl;
+//		cout << "_______: " ;
+//		cin >> b;
+//		int t = 0;
+//		while (!HavePassword(a, b))
+//		{
+//			if (t > 3)
+//				return t;
+//			system("cls");
+//			//cout << "LOGIN --> " << a << endl;
+//			cout << "Login or password entered incorrectly. REPEAT!!! " << endl;
+//			cout << "              you have 3 tries                    " << endl;
+//			cout << "   Enter your username to login" << endl;
+//			cin >> a;
+//			cout << "   Enter your username to Password" << endl;
+//			cin >> b;
+//			t++;
+//		}
+//
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if (a == iter->GetLgin())
+//			{
+//				return iter->GetID();
+//			}
+//
+//		}
+//		
+//		
+//
+//	}
+//	void ICreatAcount()
+//	{
+//				student tem;
+//				cout << "Dear student! We are glad to see you here!!!" << endl;
+//			tem.SetStudent();
+//			cout << endl << endl;
+//		 while (HaveLogin(tem.GetLgin()))
+//		 {
+//			 system("cls");
+//		     cout << "LOGIN --> " << tem.GetLgin() << endl;
+//			 cout << "THIS LOGIN IS BEING USED. You need to enter another login! " << endl;
+//			 tem.SetLgin();
+//			
+//		 }
+//		 cout << endl;
+//		tem.Show();
+//		int b;
+//		cout << endl;
+//		cout << "If everything is correct, press 5 to create an account!!!" << endl;
+//		cin >> b;
+//		if (b == 5)
+//		{
+//			Init.push_back(tem);
+//			WriteFile();
+//			system("cls");
+//			cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
+//			system("pause");
+//		}
+//		else
+//		{
+//			ICreatAcount();
+//		}
+//	}
+//
+//	void Edit()
+//	{
+//		Logo();
+//		//ReadFile();
+//		//student tem;
+//		cout << "Admin you can change student details!!! " << endl;
+//		cout << "Enter student ID to change student information! : ";
+//		int id;
+//		//tem.SetStudent();
+//
+//		cin >> id;
+//		system("cls");
+//		cout << "Please enter new data!" << endl << endl;
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			if ( (iter->GetID())==id)
+//			{
+//				iter->SetName();
+//				iter->SetSurname();
+//				iter->SetAddress();
+//				iter->SetPhone();
+//				iter->SetLgin();
+//				iter->SetPassword();
+//				break;
+//			}
+//		}
+//		if (iter == Init.end())
+//		{
+//			cout << "ID is not correct" << endl;
+//			system("pause");
+//			return;
+//		}
+//			cout << endl;
+//			system("cls");
+//			cout << "Your corrections" << endl<<endl;
+//			//iter = Init.begin();
+//			iter->Show();
+//			int b;
+//			cout << endl;
+//			cout << "If everything is correct, press 5 to create an account!!!" << endl;
+//			cin >> b;
+//			if (b == 5)
+//			{
+//
+//				WriteFile();
+//				system("cls");
+//				cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
+//			}
+//			else
+//			{
+//				system("cls");
+//				cout << " --------- >>> Ñhanges not saved <<<-----------" << endl;
+//				system("pause");
+//			}
+//		}
+//	void WriteFile()
+//	{
+//		string a("DataPeople.txt");
+//		fstream fs;
+//		fs.open(a,  fstream::out);
+//		if (!fs.is_open())
+//		{
+//			cout << "Error open file" << endl; //Error open file
+//		}
+//		vector <student>  ::iterator iter = Init.begin();
+//		for (; iter != Init.end(); iter++)
+//		{
+//			//fstream fs;
+//			fs << iter->GetName() << "\n";
+//			fs << iter->GetSurname() << "\n";
+//			fs << iter->GetLgin() << "\n";
+//			fs << iter->GetPassword() << "\n";
+//			fs << iter->GetAddress() << "\n";
+//			fs << iter->GetPhone_number() << "\n";
+//			fs << iter->GetID() << "\n";
+//
+//		}
+//		fs.close();
+//	}
+//	void ReadFile()
+//	{
+//		string a("DataPeople.txt");
+//		fstream fs;
+//		fs.open(a, fstream::in );
+//		if (!fs.is_open())
+//		{
+//			cout << "Your account will be the first" << endl; //Error open file
+//		}
+//		else
+//		{
+//			//student temp;
+//			string name;
+//			string surname;
+//			string Password;
+//			string login;
+//			string address;
+//			string phone_nomber;
+//			int ID;
+//			int b = 0;
+//			while (!fs.eof())
+//			{
+//				
+//				fs >> name;
+//				fs >> surname;
+//				fs >> login;
+//				fs >> Password;
+//				fs.ignore(256, '\n');
+//				getline(fs, address);
+//				fs >> phone_nomber;
+//				fs >> ID;
+//				fs.ignore(256, '\n');
+//				student temp(name, surname, login, Password, ID, address, phone_nomber);
+//				Init.push_back(temp);
+//				//b++;
+//			}
+//
+//			Init.pop_back();
+//			fs.close();
+//		}
+//	}
+//
+//};
 class Admin : public human, public IRegistration
 {
 
@@ -228,12 +379,13 @@ public:
 	Admin(): human(){}
 	Admin(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP) : human(nameP, surnameP, loginP, passwordP, IDP) {}
 
-	void Enter()
+	int Enter()
 	{
 		Logo();
 		ReadFile();
-		cout << "Enter -1- if you have an acount" << endl;
-		cout << "Enter -2- if you want to create an acount" << endl;
+		cout << "Enter -1- if you have an acount" << endl << endl;
+		cout << "                Enter -2- if you want to create an acount" << endl << endl;
+		cout << "                                              press -3- to exit" << endl << endl;
 		//system("cls");
 		int b;
 		cin >> b;
@@ -249,11 +401,12 @@ public:
 
 				Enter();
 			}
-			break;
+			return 1;
+			
 		}
 		case(2):
 		{
-			if (GetID() == 1796)
+			if (GetID() == 1000)
 			{
 				cout << "Already have an administrator" << endl;
 				cout << "In this application, there is only one administrator!" << endl;
@@ -262,6 +415,12 @@ public:
 			}
 			else
 			ICreatAcount();
+			return 1;
+			break;
+		}
+		case(3):
+		{
+			return 0;
 			break;
 		}
 		default:
@@ -358,6 +517,7 @@ public:
 			system("cls");
 			//cout << "LOGIN --> " << a << endl;
 			cout << "Login or password entered incorrectly. REPEAT!!! " << endl;
+			cout << "              you have 3 tries                    " << endl;
 			cout << "   Enter your username to login" << endl;
 			cin >> a;
 			cout << "   Enter your username to Password" << endl;
@@ -469,7 +629,7 @@ public:
 		//cin.ignore(1, -1);
 		cout << "Write down the question: " << endl;
 		cout << "--->:";
-		cin.ignore(1, -1);
+		//cin.ignore(1, '\n');
 		getline(cin, qustion);
 		cout << "- write down the first answer: " << endl;
 		cout << "--->:";
@@ -486,6 +646,7 @@ public:
 		cout << "Indicate the number where the correct answer is located:" << endl;
 		cout << "--->:";
 		cin >> correct_answer;
+		cin.ignore(256, '\n');
 
 	}
 	bool AnswerFromStudent()
@@ -501,20 +662,30 @@ public:
 		else
 			return 0;
 	}
+	Question& operator=(Question& obj)
+	{
+		qustion = obj.GetQustion();
+		answer1 = obj.GetAnswer1();
+		 answer2=obj.GetAnswer2();
+		 answer3=obj.GetAnswer3();
+		 answer4= obj.GetAnswer4();
+		 correct_answer = obj.GetCorrect_answer();
+		 return *this;
+	}
 };
-
-
 class Test
 {
-	int IDStudent;
 	string subject;
 	string TestName;
 	vector <Question> test;
 	int result;
-	int percent;
+	float percent; 
+	
 public:
-	Test() : IDStudent{ 0 }, subject{}, TestName{}, test{}, result{ 0 }, percent{}{}
-	Test(int IDStudentP) : IDStudent{ IDStudentP }, subject{}, TestName{}, test{}, result{ 0 }, percent{}{}
+	Test() : subject{}, TestName{}, test{}, result{ 0 }, percent{}{}
+	Test(string& subjectP, string& TestNameP, int resultP, float percentP) :  subject{ subjectP }, TestName{ TestNameP },result{ resultP }, percent{ percentP },test{}{}
+	Test( string& subjectP,  string& TestNameP) :Test(subjectP, TestNameP, 0, 0){}
+	Test(string& subjectP, string& TestNameP, int resultP, float percentP,vector <Question>&testP) : subject{ subjectP }, TestName{ TestNameP }, result{ resultP }, percent{ percentP }, test{testP}{}
 	string GetSubject()
 	{
 		return subject;
@@ -523,10 +694,23 @@ public:
 	{
 		return  TestName;
 	}
+	int GetResulte()
+	{
+		return  result;
+	}
+	 vector <Question> GetTest()
+	{
+		return test;
+	}
+	int GetPercent()
+	{
+		return  percent;
+	}
 	void AddNewTest()
 	{
 		cout << "Enter the name of the subject:" << endl;
 		cout << "--->: ";
+		cin.ignore(256, '\n');
 		getline(cin, subject);
 		cout << "Enter the name of the knowledge category:" << endl;
 		cout << "--->: ";
@@ -552,7 +736,6 @@ public:
 		{
 			cout << "Error open file" << endl; //Error open file
 		}
-
 		fs << subject << "\n";
 		fs << TestName << "\n";
 		for (int i = 0; i < 12; i++)
@@ -567,38 +750,48 @@ public:
 		
 	fs.close();
 	}
-	//void ReadFile()
-	//{
-	//	string a("DataAdmin.txt");
-	//	fstream fs;
-	//	fs.open(a, fstream::in);
-	//	if (!fs.is_open())
-	//	{
-	//		cout << "Your account will be the first" << endl; //Error open file
-	//	}
-	//	else
-	//	{
+	void ReadTest()
+	{
+	//	string a("ListTest");
+		fstream fs;
+		fs.open(TestName, fstream::in);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		else
+		{
+			string Subject;
+			string TestName;
+			getline(fs, Subject);
+			getline(fs, TestName);
+			while (!fs.eof())
+			{
+				
+				string qustion;
+				string answer1;
+				string answer2;
+				string answer3;
+				string answer4;
+				int correct_answer;
+				getline(fs, qustion);
+				getline(fs, answer1);
+				getline(fs, answer2);
+				getline(fs, answer3);
+				getline(fs, answer4);
+				
+				fs >> correct_answer;
+				//fs.ignore(256, '\n');
+				Question T(qustion, answer1, answer2, answer3, answer4, correct_answer);
+				test.push_back(T);
+				fs.ignore(256, '\n');
+			}
 
-	//		string name;
-	//		string surname;
-	//		string Password;
-	//		string login;
-	//		int ID;
-	//		int b = 0;
-	//		fs >> name;
-	//		fs >> surname;
-	//		fs >> login;
-	//		fs >> Password;
-	//		fs >> ID;
 
-	//		Admin B(name, surname, login, Password, ID);
-	//		*this = B;
-
-
-	//		fs.close();
-	//	}
-	//}
-
+			test.pop_back();
+			fs.close();
+		}
+	}
 	int PassTest()
 	{
 		
@@ -609,23 +802,71 @@ public:
 			if(test[i].AnswerFromStudent())
 				result++;
 		}
+		cout << endl;
 		percent = result / 0.12;
 		cout << "You answered " << result << " questions correctly!" << endl;
 		cout << "Scored " << percent << "%" << endl;
+		system("pause");
 		return result;
+	}
+	Test& operator=(  Test& obj)
+	{
+		delete &subject;
+		delete& TestName;
+	//	delete test
+//*this = obj;
+		subject =  obj.GetSubject();
+		TestName = obj.GetTestName();
+		result = obj.GetResulte();
+		percent = obj.GetPercent();
+		//Test OR;
+		//OR = obj.GetTest();
+		//test = obj.GetTest().begin();
+		vector <Question>  ::iterator iter = obj.test.begin();
+		vector <Question>  ::iterator iter2 = test.begin();
+		string qustion;
+		string answer1;
+		string answer2;
+		string answer3;
+		string answer4;
+		int correct_answer;
+		for (; iter != obj.test.end(); iter++)
+		{
+			qustion = iter->GetQustion();
+			answer1 = iter->GetAnswer1();
+			answer2 = iter->GetAnswer2();
+			answer3 = iter->GetAnswer3();
+			answer4 = iter->GetAnswer4();
+			correct_answer = iter->GetCorrect_answer();
+			Question T(qustion, answer1, answer2, answer3, answer4, correct_answer);
+			test.push_back(T);
+		}
+		//delete &obj;
+
+		return *this;
 	}
 
 
-
 };
-
-
 class KnowledgeTesting
 {
-	
+
 	vector <Test> tests;
 public:
-	KnowledgeTesting(): tests{}{}
+	KnowledgeTesting() : tests{} {}
+	void Show()
+	{
+		vector <Test>  ::iterator iter = tests.begin();
+		for (; iter != tests.end(); iter++)
+		{
+			cout << endl;
+			
+			cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << endl;
+			cout << "      Subject:    " << iter->GetSubject() << endl;
+			cout << "      Test name:  "<< iter->GetTestName() << endl;
+			cout << "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR" << endl;
+		}
+	}
 	void NewTest()
 	{
 
@@ -647,53 +888,1050 @@ public:
 			fs << iter->GetSubject() << "\n";
 			fs << iter->GetTestName() << "\n";
 		}
-	
-		
+
+
 		fs.close();
+	}
+	void ReadListTest()
+	{
+		string a("ListTest");
+		fstream fs;
+		fs.open(a, fstream::in);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		else
+		{
+			while (!fs.eof())
+			{
+				//fs.ignore(256, '\n');
+				string Subject;
+				string TestName;
+				getline(fs, Subject);
+				getline(fs, TestName);
+				Test T(Subject, TestName);
+				tests.push_back(T);
+			}
+
+
+			tests.pop_back();
+			fs.close();
+		}
+	}
+	void ReadOllTest()
+	{
+		//string a("ListTest");
+		vector <Test>  ::iterator iter = tests.begin();
+		for (; iter != tests.end(); iter++)
+		{
+			iter->ReadTest();
+			//fstream fs;
+			//fs.open(iter->GetTestName(), fstream::in);
+			//if (!fs.is_open())
+			//{
+			//	cout << "Error open file" << endl; //Error open file
+			//}
+			//else
+			//{
+			//	iter->ReadTest();
+			//	fs.close();
+			//}
+		}
+	}
+	string CategorySelection()
+	{
+		int a = 0;
+		int q = 0;
+		vector <string> Temp;
+
+		cout << "Select a category to pass from the proposed one and write down its number" << endl;
+		vector <Test>  ::iterator iter = tests.begin();
+		
+		int n = 0;
+		for (; iter != tests.end(); iter++)
+		{
+			int r = 0;
+			vector <Test>  ::iterator iter2 = tests.begin();
+			for (; iter2 != iter; iter2++)
+			{
+				n++;
+				if (iter2->GetSubject() == iter->GetSubject())
+				{
+					r++;
+				}
+			}
+			if (r == 0 || n == 1)
+			{
+				Temp.push_back(iter->GetSubject());
+				cout << "number - " << ++a << endl;
+				cout << "Category: " << iter->GetSubject() << endl;;
+			}
+		}
+		cout << "Your choice -->: ";
+		cin >> q;
+
+		return Temp[q - 1].data();
+
+	}
+	string TestSelection(const string& categ)
+	{
+		system("cls");
+		int a = 0;
+		int q = 0;
+		vector <string> Temp;
+		cout << "-->>: " << categ << endl;
+		cout << "Select a test to pass from the proposed one and write down its number" << endl;
+		vector <Test>  ::iterator iter = tests.begin();
+
+		for (; iter != tests.end(); iter++)
+		{
+
+			if (categ == iter->GetSubject())
+			{
+				Temp.push_back(iter->GetTestName());
+				cout << "number - " << ++a << endl;
+				cout << "Test: " << iter->GetTestName() << endl;;
+			}
+		}
+		cout << "Your choice -->: ";
+		cin >> q;
+
+		return Temp[q - 1].data();
+
+	}
+	//void KnowledgeTest( student& obj)
+	//{
+	//	string t = CategorySelection();
+	//	string tes;
+	//	int r;
+	//	tes=TestSelection(t);
+	//	fstream fs;
+	//	fs.open("Result.doc", fstream::out | fstream::app);
+	//	if (!fs.is_open())
+	//	{
+	//		cout << "Error open file" << endl; //Error open file
+	//	}
+	//	vector <Test>  ::iterator iter = tests.begin();
+	//	for (; iter != tests.end(); iter++)
+	//	{
+	//		if (tes == iter->GetTestName())
+	//		{
+	//			r = iter->PassTest();
+	//			fs << "Subject: " << iter->GetSubject() << endl;
+	//			fs << "Test name: " << iter->GetTestName() << endl;
+	//			fs << "Student: " << obj.GetName() << " " << obj.GetSurname() <<endl;
+	//			fs << "Exam result: " << r << endl;
+	//			fs << "percentage of correct answers: " << r / 0.12<< endl;
+	//			fs << "==========================================================================================" << endl;
+	//		}
+	//	}
+	//	fs.close();
+	//	
+	//		
+
+	//}
+	void KnowledgeTest1(student& obj)
+	{
+		string t = CategorySelection();
+		string tes;
+		int r;
+		float b;
+		tes = TestSelection(t);
+		fstream fs;
+		fs.open("Result.txt", fstream::out | fstream::app);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		else
+		{
+			vector <Test>  ::iterator iter = tests.begin();
+			for (; iter != tests.end(); iter++)
+			{
+				if (tes == iter->GetTestName())
+				{
+					r = iter->PassTest();
+				 b = r / 0.12;
+			        // fs.ignore(256, '\n');
+					fs << iter->GetSubject() << "\n";
+					fs << iter->GetTestName() << "\n";
+					fs << obj.GetName() << "\n";
+					fs <<  obj.GetSurname() << "\n";
+					fs <<  r << "\n";
+					fs << b << "\n";
+					fs << obj.GetID()<< "\n";
+				}
+			}
+		}
+	
+		fs.close();
+
+
+
+	}
+	//Test& KTest(const string& categ)
+	//{
+	//	system("cls");
+	//	int a = 0;
+	//	int q = 0;
+	//	vector <Test> Temp;
+	//	cout << "-->>: " << categ << endl;
+	//	cout << "Select a test to pass from the proposed one and write down its number" << endl;
+	//	vector <Test>  ::iterator iter = tests.begin();
+
+	//	for (; iter != tests.end(); iter++)
+	//	{
+
+	//		if (categ == iter->GetSubject())
+	//		{
+	//			Temp.push_back(*iter);
+	//			cout << "number - " << ++a << endl;
+	//			cout << "Test: " << iter->GetTestName() << endl;;
+	//		}
+	//	}
+	//	cout << "Your choice -->: ";
+	//	cin >> q;
+	//	iter = Temp.begin()+(q-1);
+	//	
+	//	return *iter;
+	//	//Test C = Temp[q - 1].GetTest();
+	//	//return Temp[q - 1].GetTest();
+
+	//}
+	
+};
+
+
+
+class RESULT :public KnowledgeTesting, public ListOFPeople
+{
+	student A;
+	Test B;
+public:
+	RESULT():A{}, B{}{}
+	RESULT(student& AP, Test & BP) :A{ AP }, B{ BP }{}
+	RESULT(const student& obj) :A{ obj },B {  }
+	{
+		ReadListTest();
+		ReadOllTest();
+		//B = KTest(CategorySelection());
+		B.PassTest();
+		WriteResult();
+	}
+	int GetAID()
+	{
+		return A.GetID();
+	}
+	void StudentMOVE(student& obj)
+	{
+		ReadListTest();
+		ReadOllTest();
+		KnowledgeTest1(obj);
+	}
+	void WriteResultForAll()
+	{
+	fstream fs;
+	fs.open("RESULTofSTUDENT", fstream::out | fstream::app);
+	if (!fs.is_open())
+	{
+		cout << "Error open file" << endl; //Error open file
+	}
+	else
+	{
+		
+			fs << "Subject: " << B.GetSubject() << endl;
+			fs << "Test name: " << B.GetTestName() << endl;
+			fs << "Student: " << A.GetName() << " " <<A.GetSurname() << endl;
+			fs << "Exam result: " << B.GetResulte() << endl;
+			fs << "percentage of correct answers: " << B.GetPercent() << endl;
+			fs << "==========================================================================================" << endl;
+		}
+	
+	fs.close();
+	}
+	void WriteResult()
+	{
+		fstream fs;
+		fs.open("Result", fstream::out | fstream::app);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		else
+		{
+
+			fs <<  B.GetSubject() << endl;
+			fs <<  B.GetTestName() << endl;
+			fs << A.GetName() << endl;
+			fs << A.GetSurname() << endl;
+			fs << B.GetResulte() << endl;
+			fs << B.GetPercent() / 0.12 << endl;
+			fs << A.GetID() << endl;
+		}
+
+		fs.close();
+	}
+	void ShowResult()
+	{
+		//cout << " ---- Results of all students -----" << endl << endl;
+		cout << "Subject: " << B.GetSubject() << endl;
+		cout << "Test name: " << B.GetTestName() << endl;
+		cout << "Student: " << A.GetName() << " " << A.GetSurname() << endl;
+		cout << "Exam result: " << B.GetResulte() << endl;
+		cout << "percentage of correct answers: " << B.GetPercent() << endl;
+		cout << "==========================================================================================" << endl;
+	}
+	void ShowResult(int IDP)
+	{
+
+		cout << " -------------------------------------------------------------------------------------- - " << endl << endl;
+		cout << "Subject: " << B.GetSubject() << endl;
+		cout << "Test name: " << B.GetTestName() << endl;
+		cout << "Student: " << A.GetName() << " " << A.GetSurname() << endl;
+		cout << "Exam result: " << B.GetResulte() << endl;
+		cout << "percentage of correct answers: " << B.GetPercent() << "%" <<endl;
+		cout << "==========================================================================================" << endl;
+	}
+	
+};
+
+class ListRESULT
+{
+	vector<RESULT> A;
+public:
+	ListRESULT(): A{}{}
+	void ReadResult()
+	{
+		string a("Result.txt");
+		fstream fs;
+		fs.open(a, fstream::in | fstream::app);
+		if (!fs.is_open())
+		{
+			cout << "Error open file" << endl; //Error open file
+		}
+		else
+		{
+		
+			//cout << " ---- Results of all students -----" << endl << endl;
+			while (!fs.eof())
+			{
+				
+				string Subject;
+				string TestName;
+				string Name;
+				string Surname;
+				int result;
+				float Percent;
+				int ID;
+				getline(fs, Subject);
+				getline(fs, TestName);
+				getline(fs, Name);
+				getline(fs, Surname);
+				fs >> result;
+				fs >> Percent;
+				fs >> ID;
+				fs.ignore(256, '\n');
+				Test T(Subject, TestName, result, Percent);
+				student S (Name, Surname, ID);
+				RESULT W(S, T);
+				A.push_back(W);
+				if (fs.eof()) break;
+				//cin.ignore(256, '\n');
+				
+			}
+
+			A.pop_back();
+
+
+			
+		}
+		fs.close();
+
+	}
+	void Show()
+	{
+		vector <RESULT>  ::iterator iter = A.begin();
+		for (; iter != A.end(); iter++)
+		{
+			cout << " ---- Results of all students -----" << endl << endl;
+			iter->ShowResult();
+		}
+	}
+	void Show(int IDP)
+	{
+		int a = 0;
+		vector <RESULT>  ::iterator iter = A.begin();
+		for (; iter != A.end(); iter++)
+		{
+		//	cout << " ---- Results -----" << endl << endl;
+			if (iter->GetAID() == IDP)
+			{
+			//	cout << " ---- Results of all students -----" << endl << endl;
+				iter->ShowResult();
+				a++;
+			}
+		}
+		if(a==0)
+		{
+			cout << "The student did not pass any test !" << endl;
+		}
+	}
+	void ShowAll()
+	{
+		cout << "view the test results of all students press -1-" << endl << endl;
+	    cout << "                    view all results of one student press -2-" << endl << endl;
+		cout << "                                               press -3- to exit" << endl << endl;
+		cout << "------->: ";
+		int a;
+		cin >> a;
+		switch (a)
+		{
+		case(1):
+		{
+			system("cls");
+				Show();
+				system("pause");
+				ShowAll();
+				break;
+		}
+		case(2):
+		{
+			system("cls");
+			cout << "Enter ID student to view information about it -> ";
+			int a;
+			cin >> a;
+			Show(a);
+			system("pause");
+			ShowAll();
+			break;
+		}
+		case(3):
+		{
+			
+			break;
+		}
+		default:
+			ShowAll();
+		}
+		
+}        
+};
+
+
+void MenuStudent(student& obj)
+{
+	system("cls");
+	int q;
+	Logo();
+	cout << endl;
+	cout << " HELLO " << obj.GetName() << "! I wish you to benefit from my development" << endl << endl;
+	cout << "choose and pass the test press -1- " << endl << endl;
+	cout << "                   see your results press -2-" << endl << endl;
+	cout << "                                    press -3- to exit" << endl << endl;
+	cout << "------->: ";
+	cin >> q;
+	switch (q)
+	{
+	case(1):
+	{
+		system("cls");
+		RESULT D;
+		D.StudentMOVE(obj);
+		
+		MenuStudent(obj);
+		break;
+	}
+	case(2):
+	{
+		ListRESULT B;
+		system("cls");
+		B.ReadResult();
+		Logo();
+		cout << " ____________ Here are all your results _____________ " << endl << endl;
+		B.Show(obj.GetID());
+		system("pause");
+		//RESULT D;
+		//D.StudentMOVE(obj);
+		MenuStudent(obj);
+		break;
+	}
+	case(3):
+	{
+		
+		break;
+	}
+	default:
+		MenuStudent(obj);
+		
+	}
+
+}
+
+
+void MenuAdmin(Admin& obj)
+{
+	system("cls");
+	int q;
+	Logo();
+	cout << endl;
+	cout << " HELLO " << obj.GetName() << "! I wish you to benefit from my development" << endl << endl;
+	cout << "View information about students press -1- " << endl << endl;
+	cout << "                          Test section press -2-" << endl << endl;
+	cout << "                                        press -3- to exit" << endl << endl;
+	cout << "------->: ";
+	cin >> q;
+	switch (q)
+	{
+	case(1):
+	{
+		system("cls");
+		cout << "Information about students press -1- " << endl << endl;
+		cout << "                   Edit student information press -2-" << endl << endl;
+		cout << "                                    view test results press -3- " << endl << endl;
+		cout << "                                               delete student account -4- " << endl << endl;
+		cout << "                                                                     press -5- to exit" << endl << endl;
+		cout << "------->: ";
+
+
+		int a;
+		cin >> a;
+		switch (a)
+		{
+		case(1):
+		{
+			ListOFPeople stud;
+			stud.ReadFile();
+			stud.ShowStudent();
+			MenuAdmin(obj);
+			break;
+		}
+		case(2):
+		{
+			ListOFPeople stud;
+			stud.ReadFile();
+			stud.Edit();
+			MenuAdmin(obj);
+			break;
+		}
+		case(3):
+		{
+			ListRESULT B;
+			B.ReadResult();
+			B.ShowAll();
+			MenuAdmin(obj);
+			break;
+		}
+		case(4):
+		{
+			ListOFPeople stud;
+			stud.ReadFile();
+			stud.DeleteStudent();
+			break;
+		}
+		case(5):
+		{
+
+			break;
+		}
+		default:
+		{
+			MenuAdmin(obj);
+			break;
+		}
+		}
+	}
+	case(2):
+	{
+		system("cls");
+		cout << "Ñreate a test press -1- " << endl << endl;
+		cout << "                   see all tests -2-" << endl << endl;
+		cout << "                                                 press -3- to exit" << endl << endl;
+		cout << "------->: ";
+
+
+		int a;
+		cin >> a;
+		switch (a)
+		{
+		case(1):
+		{
+			KnowledgeTesting B;
+			B.ReadListTest();
+			B.ReadOllTest();
+			B.NewTest();
+			MenuAdmin(obj);
+			break;
+		}
+		case(2):
+		{
+			system("cls");
+			KnowledgeTesting B;
+			B.ReadListTest();
+			B.ReadOllTest();
+			cout << "All possible tests !!!" << endl << endl;
+			B.Show();
+			system("pause");
+			MenuAdmin(obj);
+			break;
+		}
+		case(3):
+		{
+		
+
+			break;
+		}
+		default:
+		{
+			MenuAdmin(obj);
+			break;
+		}
+		}
+
+	}
+
+
+	}
+}
+
+void Menu()
+{
+	
+	int q;
+	Logo();
+	//system("cls");
+	cout << "if you are a student press -1- " << endl << endl;
+	cout << "             if you are an administrator press -2-" << endl << endl;
+	cout << "------->: ";
+	cin >> q;
+	
+	//stud.ReadFile();
+	switch (q)
+	{
+	case(1):
+	{
+		Logo();
+		ListOFPeople stud;
+	student stud_1 = stud.Enter();
+	if(stud_1.GetID()==0)
+		Menu();
+
+		MenuStudent(stud_1);
+		Menu();
+		break;
+	
+	}
+	case(2):
+	{
+		Logo();
+		Admin admin;
+		int a=admin.Enter();
+		if(a==0)
+			Menu();
+		MenuAdmin(admin);
+		Menu();
+		break;
+
+	}
+	default:
+		Menu();
+	}
+	
+}
+
+int main()
+{
+
+	/*KnowledgeTesting B;
+	B.ReadListTest();
+	B.ReadOllTest();
+	B.NewTest();
+	system("cls");*/
+	//KnowledgeTesting B;
+	//B.ReadListTest();
+	//B.Show();
+	//B.ReadOllTest();
+	//cout << "All possible tests !!!" << endl << endl;
+	//B.Show();
+	//system("pause");
+	/*ListRESULT B;
+	system("cls");
+	B.ReadResult();
+	Logo();
+	cout << " ____________ Here are all your results _____________ " << endl << endl;
+	B.Show(1999);
+	system("pause");*/
+	//RESULT D;
+	//D.StudentMOVE(obj);
+	//MenuStudent(obj);
+	/*RESULT f;
+	f.ReadListTest();
+	f.ReadOllTest();
+	string R = f.CategorySelection();
+	Test B = f.KTest(R);
+
+	B.PassTest();
+	f.WriteResult()*/;
+	Menu();
+	//ListOFPeople D;
+	//student r = D.Enter();
+	//E.ReadResultNAme(r);
+	//E.StudentMOVE(r);
+//	system("pause");
+	
+
+	return 0;
+}
+
+void ListOFPeople::Add(const student& obj)
+{
+	Init.push_back(obj);
+
+}
+void ListOFPeople::ShowStudent()
+{
+	//ReadFile();
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		iter->Show();
+	}
+	system("pause");
+}
+bool ListOFPeople::HaveLogin(const string& login)
+{
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if (login == iter->GetLgin())
+		{
+			return true;
+		}
+
+	}
+	return false;
+}
+bool ListOFPeople::HaveID(int IDp)
+{
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if (IDp == iter->GetID())
+		{
+			return true;
+		}
+
+	}
+	return false;
+}
+bool ListOFPeople::HavePassword(const string& login, const string& password)
+{
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if (login == iter->GetLgin() && password == iter->GetPassword())
+		{
+			return true;
+		}
+
+	}
+	return false;
+}
+
+student ListOFPeople::Enter()
+{
+	Logo();
+	Init.clear();
+	ReadFile();
+	cout << "Enter -1- if you have an acount" << endl << endl;
+	cout << "                  Enter -2- if you want to create an acount" << endl << endl;
+	cout << "                                               press -3- to exit" << endl << endl;
+	//system("cls");
+	int b;
+	cin >> b;
+	system("cls");
+	switch (b)
+	{
+	case(1):
+	{
+		int a = IEnterToApp();
+		vector <student>  ::iterator iter = Init.begin();
+		for (; iter != Init.end(); iter++)
+		{
+			if (a == iter->GetID())
+			{
+				return *iter;
+			}
+
+		}
+		if (a < 1000)
+		{
+			system("cls");
+
+			Enter();
+		}
+		break;
+	}
+	case(2):
+	{
+		ICreatAcount();
+		return Init.back();
+
+	}
+	case(3):
+	{
+		student s;
+		return s;
+
+
+	}
+	default:
+	{
+		Enter();
+	}
+	}
+
+}
+
+
+void ListOFPeople::DeleteStudent()
+{
+	string a("DataPeople.txt");
+	fstream fs;
+	fs.open(a, fstream::out);
+	if (!fs.is_open())
+	{
+		cout << "Error open file" << endl; //Error open file
+	}
+	Logo();
+	//ReadFile();
+	cout << "Enter the ID of the student whose information you want to delete " << endl;
+	int id;
+	//tem.SetStudent();
+
+	cin >> id;
+	system("cls");
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if (id == iter->GetID())
+		{
+			continue;
+
+		}
+		else
+		{
+			fs << iter->GetName() << "\n";
+			fs << iter->GetSurname() << "\n";
+			fs << iter->GetLgin() << "\n";
+			fs << iter->GetPassword() << "\n";
+			fs << iter->GetAddress() << "\n";
+			fs << iter->GetPhone_number() << "\n";
+			fs << iter->GetID() << "\n";
+		}
+	}
+	Init.pop_back();
+
+
+	system("cls");
+	cout << " --------- >>> deletion completed <<<-----------" << endl;
+	system("pause");
+
+
+}
+int ListOFPeople::IEnterToApp()
+{
+	Logo();
+	string a;
+	string b;
+	cout << "<<<<<<<<<<<<<<<<<<<<<<  HELLO STUDENT  >>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+	cout << "                 Enter your username to login" << endl;
+	cout << "_______: ";
+	cin >> a;
+	cout << "                Enter your username to Password" << endl;
+	cout << "_______: ";
+	cin >> b;
+	int t = 0;
+	while (!HavePassword(a, b))
+	{
+		if (t > 3)
+			return t;
+		system("cls");
+		//cout << "LOGIN --> " << a << endl;
+		cout << "Login or password entered incorrectly. REPEAT!!! " << endl;
+		cout << "              you have 3 tries                    " << endl;
+		cout << "   Enter your username to login" << endl;
+		cin >> a;
+		cout << "   Enter your username to Password" << endl;
+		cin >> b;
+		t++;
+	}
+
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if (a == iter->GetLgin())
+		{
+			return iter->GetID();
+		}
+
 	}
 
 
 
-
-};
-
-int main()
+}
+void ListOFPeople::ICreatAcount()
 {
-	KnowledgeTesting A;
-	A.NewTest();
-	Test N;
-	N.AddNewTest();
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
-	cout << "++++++++++++++++++++++++++++++++++++++++++++++++==" << endl;
+	student tem;
+	cout << "Dear student! We are glad to see you here!!!" << endl;
+	tem.SetStudent();
+	cout << endl << endl;
+	while (HaveLogin(tem.GetLgin()))
+	{
+		system("cls");
+		cout << "LOGIN --> " << tem.GetLgin() << endl;
+		cout << "THIS LOGIN IS BEING USED. You need to enter another login! " << endl;
+		tem.SetLgin();
 
-	N.PassTest();
-	Question T;
-	//T.AddQustion();
+	}
 	cout << endl;
-	cout << T.GetQustion();
-	T.ShowQustion();
-	if (T.AnswerFromStudent())
-		cout << "Good";
+	tem.Show();
+	int b;
+	cout << endl;
+	cout << "If everything is correct, press 5 to create an account!!!" << endl;
+	cin >> b;
+	if (b == 5)
+	{
+		Init.push_back(tem);
+		WriteFile();
+		system("cls");
+		cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
+		system("pause");
+	}
 	else
-		cout << "not god";
+	{
+		ICreatAcount();
+	}
+}
 
+void ListOFPeople::Edit()
+{
+	Logo();
+	//ReadFile();
+	//student tem;
+	cout << "Admin you can change student details!!! " << endl;
+	cout << "Enter student ID to change student information! : ";
+	int id;
+	//tem.SetStudent();
 
-	Admin W;
-	//W.ICreatAcount();
-	//W.ReadFile();
-//	W.Enter();
-	//W.Show();
-	
-	//ListOFPeople T;
+	cin >> id;
+	system("cls");
+	cout << "Please enter new data!" << endl << endl;
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		if ((iter->GetID()) == id)
+		{
+			iter->SetName();
+			iter->SetSurname();
+			iter->SetAddress();
+			iter->SetPhone();
+			iter->SetLgin();
+			iter->SetPassword();
+			break;
+		}
+	}
+	if (iter == Init.end())
+	{
+		cout << "ID is not correct" << endl;
+		system("pause");
+		return;
+	}
+	cout << endl;
+	system("cls");
+	cout << "Your corrections" << endl << endl;
+	//iter = Init.begin();
+	iter->Show();
+	int b;
+	cout << endl;
+	cout << "If everything is correct, press 5 to create an account!!!" << endl;
+	cin >> b;
+	if (b == 5)
+	{
 
-	//T.Enter();
-	//system("cls");
-	//cout << "CONGTETULATE!CONGTETULATECONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!CONGTETULATE!ATE!CONGTETULATE!"<<endl;
+		WriteFile();
+		system("cls");
+		cout << "Congratulations! YOU HAVE ACCOUNT!!!" << endl;
+	}
+	else
+	{
+		system("cls");
+		cout << " --------- >>> Ñhanges not saved <<<-----------" << endl;
+		system("pause");
+	}
+}
+void ListOFPeople::WriteFile()
+{
+	string a("DataPeople.txt");
+	fstream fs;
+	fs.open(a, fstream::out);
+	if (!fs.is_open())
+	{
+		cout << "Error open file" << endl; //Error open file
+	}
+	vector <student>  ::iterator iter = Init.begin();
+	for (; iter != Init.end(); iter++)
+	{
+		//fstream fs;
+		fs << iter->GetName() << "\n";
+		fs << iter->GetSurname() << "\n";
+		fs << iter->GetLgin() << "\n";
+		fs << iter->GetPassword() << "\n";
+		fs << iter->GetAddress() << "\n";
+		fs << iter->GetPhone_number() << "\n";
+		fs << iter->GetID() << "\n";
 
-	
+	}
+	fs.close();
+}
+void ListOFPeople::ReadFile()
+{
+	string a("DataPeople.txt");
+	fstream fs;
+	fs.open(a, fstream::in);
+	if (!fs.is_open())
+	{
+		cout << "Your account will be the first" << endl; //Error open file
+	}
+	else
+	{
+		//student temp;
+		string name;
+		string surname;
+		string Password;
+		string login;
+		string address;
+		string phone_nomber;
+		int ID;
+		int b = 0;
+		while (!fs.eof())
+		{
 
-	return 0;
+			fs >> name;
+			fs >> surname;
+			fs >> login;
+			fs >> Password;
+			fs.ignore(256, '\n');
+			getline(fs, address);
+			fs >> phone_nomber;
+			fs >> ID;
+			fs.ignore(256, '\n');
+			student temp(name, surname, login, Password, ID, address, phone_nomber);
+			Init.push_back(temp);
+			//b++;
+		}
+
+		Init.pop_back();
+		fs.close();
+	}
 }
