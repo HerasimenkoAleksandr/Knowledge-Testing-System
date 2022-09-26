@@ -240,3 +240,123 @@ public:
 	void ReadFile();
 
 };
+
+
+class Admin : public human, public IRegistration
+{
+
+public:
+	Admin();
+	Admin(const string& nameP, const string& surnameP, const string& loginP, const string& passwordP, int IDP);
+
+	int Enter();
+	void Show();
+	void edit();
+
+	void SetAdmin();
+	void ICreatAcount();
+	bool HaveLogin(const string& login);
+	bool HavePassword(const string& password);
+	int IEnterToApp();
+	void WriteFile();
+	void ReadFile();
+};
+
+
+class Question
+{
+	string qustion;
+	string answer1;
+	string answer2;
+	string answer3;
+	string answer4;
+	int correct_answer;
+
+public:
+
+	Question(const string& qustionP, const string& answer1P, const string& answer2P, const string& answer3P, const string& answer4P, int correct_answerP);
+	Question();
+
+	string GetQustion();
+	string GetAnswer1();
+	string GetAnswer2();
+	string GetAnswer3();
+	string GetAnswer4();
+	int GetCorrect_answer();
+	void ShowQustion();
+	void AddQustion();
+	bool AnswerFromStudent();
+	Question& operator=(Question& obj);
+};
+
+class Test
+{
+	string subject;
+	string TestName;
+	vector <Question> test;
+	int result;
+	float percent;
+
+public:
+	Test();
+	Test(string& subjectP, string& TestNameP, int resultP, float percentP);
+	Test(string& subjectP, string& TestNameP);
+	Test(string& subjectP, string& TestNameP, int resultP, float percentP, vector <Question>& testP);
+	string GetSubject();
+	string GetTestName();
+	int GetResulte();
+	vector <Question> GetTest();
+	int GetPercent();
+	void AddNewTest();
+	void WriteFile();
+	void ReadTest();
+	int PassTest();
+	Test& operator=(Test& obj);
+
+
+};
+
+class KnowledgeTesting
+{
+
+	vector <Test> tests;
+public:
+	KnowledgeTesting();
+	void Show();
+	void NewTest();
+	void ReadListTest();
+	void ReadOllTest();
+	string CategorySelection();
+	string TestSelection(const string& categ);
+	void KnowledgeTest1(student& obj);
+
+
+};
+
+class RESULT :public KnowledgeTesting, public ListOFPeople
+{
+	student A;
+	Test B;
+public:
+	RESULT();
+	RESULT(student& AP, Test& BP);
+	RESULT(const student& obj);
+	int GetAID();
+	void StudentMOVE(student& obj);
+	void WriteResultForAll();
+	void WriteResult();
+	void ShowResult();
+	void ShowResult(int IDP);
+};
+
+class ListRESULT
+{
+	vector<RESULT> A;
+public:
+	ListRESULT();
+	void ReadResult();
+	void Show();
+	void Show(int IDP);
+	void ShowAll();
+};
+
